@@ -4,3 +4,5 @@ obj/
 output*.txt
 /packages
 /.vs
+*.dmp
+*.zip
