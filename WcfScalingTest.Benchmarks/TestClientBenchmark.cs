@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
+using BenchmarkDotNet.Jobs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ using WcfScalingTestClient;
 
 namespace WcfScalingTest.Benchmarks
 {
-    [SimpleJob(RunStrategy.Monitoring, iterationCount: 10, id: "MonitoringJob")]
+    [SimpleJob(RunStrategy.Monitoring, runtimeMoniker: RuntimeMoniker.Net60, iterationCount: 10, id: "MonitoringJob")]
+    [SimpleJob(RunStrategy.Monitoring, runtimeMoniker: RuntimeMoniker.Net80, iterationCount: 10, id: "MonitoringJob")]
     [MinColumn, Q1Column, Q3Column, MaxColumn]
     public class TestClientBenchmark
     {
