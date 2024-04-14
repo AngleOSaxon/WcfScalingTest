@@ -12,6 +12,10 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry;
 using System.Text;
+using System.Diagnostics;
+using WcfScalingTestClient;
+using System.ServiceModel.Description;
+using System.ServiceModel.Channels;
 
 IServiceCollection services = new ServiceCollection();
 
@@ -26,6 +30,8 @@ OpenTelemetrySdk.CreateMeterProviderBuilder()
 services.AddSingleton(new ChannelMetrics());
 services.AddSingleton<MetricInstrumentationBehavior>();
 
+ThreadPool.SetMinThreads(100, 100);
+
 IServiceProvider serviceProvider = services.BuildServiceProvider();
 
 // Obtain logger instance from DI.
@@ -34,54 +40,9 @@ ILogger<Program> logger = serviceProvider.GetRequiredService<ILogger<Program>>()
 // Obtain TelemetryClient instance from DI, for additional manual tracking or to flush.
 var telemetryClient = serviceProvider.GetRequiredService<TelemetryClient>();
 
-var netTcpBinding = new NetTcpBinding()
-{
-    Security = new NetTcpSecurity
-    {
-        Transport = new TcpTransportSecurity
-        {
-            ClientCredentialType = TcpClientCredentialType.None
-        },
-        Mode = SecurityMode.Transport
-    }
-};
-var address = new EndpointAddress("net.tcp://localhost:3001/service");
-var channelFactory = new ChannelFactory<IService>(netTcpBinding, address);
-channelFactory.Endpoint.Contract.ContractBehaviors.Add(serviceProvider.GetRequiredService<MetricInstrumentationBehavior>());
-channelFactory.Endpoint.EndpointBehaviors.Add(new ClientTelemetryEndpointBehavior(telemetryClient));
+var clientTest = new ClientTest(logger);
 
-const string fileNamePrefix = "output";
-const string fileNameExtension = "txt";
-var fileName = $"{fileNamePrefix}.{fileNameExtension}";
-if (File.Exists(fileName))
-{
-    var currentDir = Directory.GetCurrentDirectory();
-    var lastNumber = Directory.GetFiles(currentDir, $"{fileNamePrefix}.*.{fileNameExtension}").Select(item => int.Parse(item.Split(".")[1])).OrderByDescending(item => item).First();
-    fileName = $"{fileNamePrefix}.{lastNumber + 1}.{fileNameExtension}";
-}
-var taskList = new Task[100];
-using var fileStream = new FileStream(fileName, FileMode.Create);
-var timer = new System.Diagnostics.Stopwatch();
-timer.Start();
-for (var i = 0; i < 100; i++)
-{
-    var channel = channelFactory.CreateChannel();
-    
-    int localCopy = i;
-    taskList[i] = Task.Run(async () =>
-    {
-        for (var j = 0; j < 3; j++)
-        {
-            var result = channel.TestOperation($"test{localCopy}_{j}");
-            var log = $"{timer.ElapsedMilliseconds}{result}{Environment.NewLine}";
-            await fileStream.WriteAsync(Encoding.UTF8.GetBytes(log));
-        }
-    });
-}
-await Task.WhenAll(taskList);
+await clientTest.Test(streaming: true, contractBehaviors: new IContractBehavior[] { serviceProvider.GetRequiredService<MetricInstrumentationBehavior>() }, endpointBehaviors: new IEndpointBehavior[] { new ClientTelemetryEndpointBehavior(telemetryClient) });
 
-
-channelFactory.Close();
-fileStream.Flush();
 telemetryClient.Flush();
-Task.Delay(30000).Wait();
+//Task.Delay(30000).Wait();

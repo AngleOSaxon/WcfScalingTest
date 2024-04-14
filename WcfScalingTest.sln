@@ -9,7 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WcfScalingTestContract", "W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WcfScalingTestServer", "WcfScalingTestServer\WcfScalingTestServer.csproj", "{B5143D24-BBBE-4797-A771-032809C1F874}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfInstrumentation.ServiceModel.Metrics", "WcfInstrumentation.ServiceModel.Metrics\WcfInstrumentation.ServiceModel.Metrics.csproj", "{3DC3E101-669B-4447-9CF8-E3FF880F81AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WcfInstrumentation.ServiceModel.Metrics", "WcfInstrumentation.ServiceModel.Metrics\WcfInstrumentation.ServiceModel.Metrics.csproj", "{3DC3E101-669B-4447-9CF8-E3FF880F81AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfScalingTestServer_Framework", "WcfScalingTestServer_Framework\WcfScalingTestServer_Framework.csproj", "{E4902DCA-37D3-4CA2-98CC-18E9756E0522}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfScalingTestClient_Framework", "WcfScalingTestClient_Framework\WcfScalingTestClient_Framework.csproj", "{40F33720-8629-434C-BD91-610000292A69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WcfScalingTestClient_WebApi", "WcfScalingTestClient_WebApi\WcfScalingTestClient_WebApi.csproj", "{BEF33E36-5369-4B39-A9E2-C345686D4AFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfScalingTest.Benchmarks", "WcfScalingTest.Benchmarks\WcfScalingTest.Benchmarks.csproj", "{04114149-0F5A-4D82-B416-8C1BCA105A64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +41,22 @@ Global
 		{3DC3E101-669B-4447-9CF8-E3FF880F81AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DC3E101-669B-4447-9CF8-E3FF880F81AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DC3E101-669B-4447-9CF8-E3FF880F81AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4902DCA-37D3-4CA2-98CC-18E9756E0522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4902DCA-37D3-4CA2-98CC-18E9756E0522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4902DCA-37D3-4CA2-98CC-18E9756E0522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4902DCA-37D3-4CA2-98CC-18E9756E0522}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40F33720-8629-434C-BD91-610000292A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40F33720-8629-434C-BD91-610000292A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40F33720-8629-434C-BD91-610000292A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40F33720-8629-434C-BD91-610000292A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF33E36-5369-4B39-A9E2-C345686D4AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF33E36-5369-4B39-A9E2-C345686D4AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF33E36-5369-4B39-A9E2-C345686D4AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF33E36-5369-4B39-A9E2-C345686D4AFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04114149-0F5A-4D82-B416-8C1BCA105A64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04114149-0F5A-4D82-B416-8C1BCA105A64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04114149-0F5A-4D82-B416-8C1BCA105A64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04114149-0F5A-4D82-B416-8C1BCA105A64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
