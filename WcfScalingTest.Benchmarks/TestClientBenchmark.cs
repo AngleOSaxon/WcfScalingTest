@@ -30,6 +30,22 @@ namespace WcfScalingTest.Benchmarks
             await clientTest.Test(streaming: false, Array.Empty<IContractBehavior>(), Array.Empty<IEndpointBehavior>());
         }
 
+        [Benchmark]
+        public async Task TestStreamed_500Threads()
+        {
+            System.Threading.ThreadPool.SetMinThreads(500, 100);
+            var clientTest = new ClientTest(null);
+            await clientTest.Test(streaming: true, Array.Empty<IContractBehavior>(), Array.Empty<IEndpointBehavior>());
+        }
+
+        [Benchmark]
+        public async Task TestBuffered_500Threads()
+        {
+            System.Threading.ThreadPool.SetMinThreads(500, 100);
+            var clientTest = new ClientTest(null);
+            await clientTest.Test(streaming: false, Array.Empty<IContractBehavior>(), Array.Empty<IEndpointBehavior>());
+        }
+
 
         [Benchmark]
         public async Task TestAsyncStreamed()
